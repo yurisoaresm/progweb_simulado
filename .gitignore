@@ -1,0 +1,7 @@
+# Outputs
+node_modules
+dist
+databases
+
+# Environment variables
+.env
