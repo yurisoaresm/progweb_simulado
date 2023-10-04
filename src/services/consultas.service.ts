@@ -20,48 +20,68 @@ class ConsultasService {
   }
 
   async create(data: CreateConsulta) {
-    const consulta = await this.prisma.consulta.create({
-      data,
-    });
+    try {
+      const consulta = await this.prisma.consulta.create({
+        data,
+      });
 
-    return consulta;
+      return consulta;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async findById(id: string) {
-    const consulta = await this.prisma.consulta.findUnique({
-      where: {
-        id,
-      },
-    });
+    try {
+      const consulta = await this.prisma.consulta.findUnique({
+        where: {
+          id,
+        },
+      });
 
-    return consulta;
+      return consulta;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async findAll() {
-    const consultas = await this.prisma.consulta.findMany();
+    try {
+      const consultas = await this.prisma.consulta.findMany();
 
-    return consultas;
+      return consultas;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async update(id: string, data: UpdateConsulta) {
-    const consulta = await this.prisma.consulta.update({
-      where: {
-        id,
-      },
-      data,
-    });
+    try {
+      const consulta = await this.prisma.consulta.update({
+        where: {
+          id,
+        },
+        data,
+      });
 
-    return consulta;
+      return consulta;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async delete(id: string) {
-    const consulta = await this.prisma.consulta.delete({
-      where: {
-        id,
-      },
-    });
+    try {
+      const consulta = await this.prisma.consulta.delete({
+        where: {
+          id,
+        },
+      });
 
-    return consulta;
+      return consulta;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

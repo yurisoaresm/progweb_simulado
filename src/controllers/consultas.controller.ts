@@ -1,30 +1,85 @@
 import { Request, Response } from 'express';
+import { z } from 'zod';
 
 import consultasService from '@/services/consultas.service';
 
 export class ConsultasController {
   async create(req: Request, res: Response) {
-    const consulta = await consultasService.create(req.body);
+    const createConsultaBodySchema = z.object({
+      data: z.string().uuid(),
+      nomePaciente: z.string(),
+      nomeDentista: z.string(),
+    });
 
-    return res.status(200).json(consulta);
+    try {
+      const { data, nomePaciente, nomeDentista } =
+        createConsultaBodySchema.parse(req.body);
+
+      const formattedDate = new Date(data);
+
+      const consulta = await consultasService.create({
+        data: formattedDate,
+        nomeDentista,
+        nomePaciente,
+      });
+
+      return res.status(200).json(consulta);
+    } catch (error) {
+      return res.status(400).json(error);
+    }
   }
 
   async findById(req: Request, res: Response) {
-    const consulta = await consultasService.findById(req.params.id);
+    const findByIdConsultaParamsSchema = z.object({
+      id: z.string().uuid(),
+    });
 
-    return res.status(200).json(consulta);
+    try {
+      const { id } = findByIdConsultaParamsSchema.parse(req.body);
+
+      const consulta = await consultasService.findById(id);
+
+      return res.status(200).json(consulta);
+    } catch (error) {
+      return res.status(200).json(error);
+    }
   }
 
   async update(req: Request, res: Response) {
-    const consulta = await consultasService.update(req.params.id, req.body);
+    const updateConsultaBodySchema = z.object({
+      data: z.string().optional(),
+      nomePaciente: z.string().optional(),
+      nomeDentista: z.string().optional(),
+    });
+    const updateConsultaParamsSchema = z.object({
+      id: z.string().uuid(),
+    });
 
-    return res.status(200).json(consulta);
+    try {
+      const { id } = updateConsultaParamsSchema.parse(req.params);
+      const { data, nomePaciente, nomeDentista } =
+        updateConsultaBodySchema.parse(req.body);
+
+      const consulta = await consultasService.update(id, {
+        data: data ? new Date(data) : undefined,
+        nomeDentista,
+        nomePaciente,
+      });
+
+      return res.status(200).json(consulta);
+    } catch (error) {
+      return res.status(200).json(error);
+    }
   }
 
   async delete(req: Request, res: Response) {
-    const consulta = await consultasService.delete(req.params.id);
+    try {
+      const consulta = await consultasService.delete(req.params.id);
 
-    return res.status(200).json(consulta);
+      return res.status(200).json(consulta);
+    } catch (error) {
+      return res.status(400).json(error);
+    }
   }
 
   async findAll(req: Request, res: Response) {

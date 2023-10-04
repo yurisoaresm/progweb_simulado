@@ -20,48 +20,68 @@ class PacientesService {
   }
 
   async create(data: CreatePaciente) {
-    const paciente = await this.prisma.paciente.create({
-      data,
-    });
+    try {
+      const paciente = await this.prisma.paciente.create({
+        data,
+      });
 
-    return paciente;
+      return paciente;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async findById(id: string) {
-    const paciente = await this.prisma.paciente.findUnique({
-      where: {
-        id,
-      },
-    });
+    try {
+      const paciente = await this.prisma.paciente.findUnique({
+        where: {
+          id,
+        },
+      });
 
-    return paciente;
+      return paciente;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async findAll() {
-    const pacientes = await this.prisma.paciente.findMany();
+    try {
+      const pacientes = await this.prisma.paciente.findMany();
 
-    return pacientes;
+      return pacientes;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async update(id: string, data: UpdatePaciente) {
-    const paciente = await this.prisma.paciente.update({
-      where: {
-        id,
-      },
-      data,
-    });
+    try {
+      const paciente = await this.prisma.paciente.update({
+        where: {
+          id,
+        },
+        data,
+      });
 
-    return paciente;
+      return paciente;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async delete(id: string) {
-    const paciente = await this.prisma.paciente.delete({
-      where: {
-        id,
-      },
-    });
+    try {
+      const paciente = await this.prisma.paciente.delete({
+        where: {
+          id,
+        },
+      });
 
-    return paciente;
+      return paciente;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

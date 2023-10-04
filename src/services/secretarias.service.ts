@@ -7,8 +7,7 @@ interface CreateSecretaria {
 
 interface UpdateSecretaria {
   nome?: string;
-  senha?: number;
-  usuario?: string;
+  rg?: number;
 }
 
 class SecretariasService {
@@ -19,48 +18,68 @@ class SecretariasService {
   }
 
   async create(data: CreateSecretaria) {
-    const secretaria = await this.prisma.secretaria.create({
-      data,
-    });
+    try {
+      const secretaria = await this.prisma.secretaria.create({
+        data,
+      });
 
-    return secretaria;
+      return secretaria;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async findById(id: string) {
-    const secretaria = await this.prisma.secretaria.findUnique({
-      where: {
-        id,
-      },
-    });
+    try {
+      const secretaria = await this.prisma.secretaria.findUnique({
+        where: {
+          id,
+        },
+      });
 
-    return secretaria;
+      return secretaria;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async findAll() {
-    const secretarias = await this.prisma.secretaria.findMany();
+    try {
+      const secretarias = await this.prisma.secretaria.findMany();
 
-    return secretarias;
+      return secretarias;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async update(id: string, data: UpdateSecretaria) {
-    const secretaria = await this.prisma.secretaria.update({
-      where: {
-        id,
-      },
-      data,
-    });
+    try {
+      const secretaria = await this.prisma.secretaria.update({
+        where: {
+          id,
+        },
+        data,
+      });
 
-    return secretaria;
+      return secretaria;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async delete(id: string) {
-    const secretaria = await this.prisma.secretaria.delete({
-      where: {
-        id,
-      },
-    });
+    try {
+      const secretaria = await this.prisma.secretaria.delete({
+        where: {
+          id,
+        },
+      });
 
-    return secretaria;
+      return secretaria;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
